@@ -3,7 +3,7 @@ layout: project
 title: Roko's Basilica
 type: Virtual Reality
 date: August 2016
-image: rokos_sideview.png
+image: rokos_sideview.jpg
 ---
 
 ## Background
