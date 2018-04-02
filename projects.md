@@ -9,5 +9,5 @@ image: selfriver.png
 Inquiries about my work, freelance, or potential opportunities are certainly welcome.  I'm usually never far from a computer and can reply in reasonable time.  Thank you!
 
 * Phone: By request
-* Email: dara.bonakdar@gmail.com
+* Email: hello@darabonakar.com
 * Address: San Francisco, CA, USA
