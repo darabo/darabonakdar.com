@@ -1,0 +1,22 @@
+<!--
+  One clickable project card (thumbnail + category + title).
+  Used by both the homepage grid and the /projects/ page, so the markup
+  only has to be maintained in this one place.
+
+  Usage: {% raw %}{% include project-card.html project=some_project %}{% endraw %}
+-->
+{%- assign project = include.project -%}
+<!-- Derive the project's "slug" from its filename, e.g.
+     _projects/rokos-basilica.md -> "rokos-basilica". The slug doubles as
+     the name of the project's image folder in assets/images/projects/ -->
+{%- assign project_slug = project.path | split: '/' | last | split: '.' | first -%}
+<a href="{{ project.url | relative_url }}" class="project-card reveal">
+  <!-- loading="lazy" tells the browser to wait until the image is about to
+       scroll into view before downloading it — saves bandwidth on mobile -->
+  <img src="{{ '/assets/images/projects/' | append: project_slug | append: '/' | append: project.thumbnail | relative_url }}"
+       alt="{{ project.title }}" loading="lazy"{% if project.thumbnail_fit == 'contain' %} class="fit-contain"{% endif %}>
+  <div class="project-card-overlay">
+    <span class="project-card-type">{{ project.type }}</span>
+    <span class="project-card-title">{{ project.title }}</span>
+  </div>
+</a>

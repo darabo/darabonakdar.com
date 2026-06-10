@@ -1,4 +1,6 @@
 ---
+# The /contact/ page. The cards below pull the email address and usernames
+# from _config.yml, so contact details only ever need updating there.
 layout: page
 title: Contact
 subtitle: Let's get in touch.
@@ -8,17 +10,17 @@ permalink: /contact/
 I'm open to collaboration opportunities, projects, employment, freelance, research and general inquiries. I'm usually never far from a computer and can reply in reasonable time — if you fit the description or just want to chat, please feel free to introduce yourself!
 
 <div class="contact-cards">
-  <a class="contact-card" href="mailto:hello@darabonakdar.com">
+  <a class="contact-card" href="mailto:{{ site.email }}">
     <span class="contact-card-label">Email</span>
-    <span class="contact-card-value">hello@darabonakdar.com</span>
+    <span class="contact-card-value">{{ site.email }}</span>
   </a>
-  <a class="contact-card" href="https://linkedin.com/in/darabonakdar" target="_blank" rel="noopener">
+  <a class="contact-card" href="https://linkedin.com/in/{{ site.linkedin_username }}" target="_blank" rel="noopener">
     <span class="contact-card-label">LinkedIn</span>
-    <span class="contact-card-value">in/darabonakdar</span>
+    <span class="contact-card-value">in/{{ site.linkedin_username }}</span>
   </a>
-  <a class="contact-card" href="https://github.com/darabo" target="_blank" rel="noopener">
+  <a class="contact-card" href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">
     <span class="contact-card-label">GitHub</span>
-    <span class="contact-card-value">@darabo</span>
+    <span class="contact-card-value">@{{ site.github_username }}</span>
   </a>
 </div>
 

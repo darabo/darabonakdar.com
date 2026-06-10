@@ -1,41 +1,60 @@
-# Site settings
+# ============================================================================
+# Site-wide configuration. Jekyll reads this file once at build time;
+# every value here is available in templates as site.<name>
+# (e.g. {{ site.email }}). After editing this file you must restart
+# `jekyll serve` — it is NOT reloaded automatically.
+# ============================================================================
+
+# --- Identity: used by templates and by the jekyll-seo-tag plugin ----------
 title:              Dara Bonakdar
 tagline:            VR/AR Developer, Python Engineer & Entrepreneur
-email:              hello@darabonakdar.com
+email:              dara@darabonakdar.com
 description: >-
   Dara Bonakdar — VR/AR developer, Python engineer, and entrepreneur.
   Pioneer in Virtual Reality in the San Francisco Bay Area with experience
   across three continents.
+
+# The production address. Used to build absolute URLs in SEO tags and the
+# sitemap. baseurl stays empty because the site lives at the domain root.
 url:                "https://darabonakdar.com"
 baseurl:            ""
 
 author:
   name:             Dara Bonakdar
-  email:            hello@darabonakdar.com
+  email:            dara@darabonakdar.com
 
-# Social profiles
+# --- Social profiles (referenced by the nav, footer and contact page) ------
 github_username:    darabo
 linkedin_username:  darabonakdar
-location:           San Francisco, CA, USA
+location:           New York, NY, USA
 
-# Default social-share image (relative to site root)
+# Default image shown when pages are shared on social media.
+# Project pages override this with their own thumbnail (see head.html).
 og_image:           /assets/images/header.jpg
 
-# Build settings
+# --- Build settings ---------------------------------------------------------
 markdown:           kramdown
-permalink:          pretty
+permalink:          pretty      # /about/ instead of /about.html
 
+# Plugins (all on GitHub Pages' allow-list, so they run in production too):
+#   jekyll-seo-tag  -> <title> + social/SEO meta tags on every page
+#   jekyll-sitemap  -> generates /sitemap.xml for search engines
+#   jekyll-feed     -> generates /feed.xml (RSS)
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-feed
 
-# Collection definitions and settings
+# --- Projects collection -----------------------------------------------------
+# Every Markdown file in _projects/ becomes a page at /projects/<filename>/.
+# See _projects/TEMPLATE.md for how to add one.
 collections:
   projects:
     output: true
     permalink: /projects/:path/
 
+# Apply `layout: project` to every project file automatically, so individual
+# files don't need to declare it
 defaults:
   - scope:
       path: ""
@@ -43,9 +62,11 @@ defaults:
     values:
       layout: project
 
+# Files and folders that should never be copied into the built site
 exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
   - README.md
+  - CLAUDE.md
   - LICENSE

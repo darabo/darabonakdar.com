@@ -1,4 +1,6 @@
 ---
+# The /about/ page. Plain Markdown rendered through _layouts/page.html;
+# the title and subtitle below appear in the page's header strip.
 layout: page
 title: About
 subtitle: Developer, entrepreneur and pioneer in the Bay Area VR scene.

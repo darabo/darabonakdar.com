@@ -1,14 +1,31 @@
 <!DOCTYPE html>
+<!--
+  The base skeleton that wraps every page on the site.
+  Other layouts (home, page, project) declare `layout: default` in their
+  front matter, which means their output is inserted at the "content"
+  placeholder inside <main> below. This file provides the parts shared by
+  all pages: the <head>, the navigation bar, and the footer.
+
+  Careful: Liquid placeholders (double curly braces) are live code even
+  inside HTML comments — writing one here would render the page twice.
+
+  The "no-js" class is removed by the script right below it. CSS uses this
+  to keep animated elements visible for visitors with JavaScript disabled
+  (otherwise content that animates in on scroll would never appear).
+-->
 <html lang="en" class="no-js">
 {% include head.html %}
 <body>
   <script>document.documentElement.classList.remove("no-js");</script>
+  <!-- Lets keyboard users jump straight to the content instead of
+       tabbing through every navigation link first -->
   <a class="skip-link" href="#main">Skip to content</a>
   {% include nav.html %}
   <main id="main">
     {{ content }}
   </main>
   {% include footer.html %}
+  <!-- "defer" downloads the script without blocking page rendering -->
   <script src="{{ '/assets/js/main.js' | relative_url }}" defer></script>
 </body>
 </html>

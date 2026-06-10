@@ -1,6 +1,11 @@
 ---
+# Layout for the homepage (used by index.md).
+# index.md supplies the data: the subtitle, the competencies list, and the
+# intro paragraph (which arrives here as {{ content }}).
 layout: default
 ---
+<!-- Full-screen hero banner. The background photo is set via a CSS variable
+     so the stylesheet decides how it's displayed (darkened, covered, etc.) -->
 <section class="hero" style="--hero-image: url('{{ '/assets/images/header.jpg' | relative_url }}')">
   <div class="hero-content container">
     <p class="hero-kicker reveal">Hello, I'm</p>
@@ -13,6 +18,7 @@ layout: default
   </div>
 </section>
 
+<!-- Short bio. The text comes from the body of index.md -->
 <section class="section section-accent" id="about">
   <div class="container narrow text-center">
     <h2 class="section-heading reveal">About, in brief</h2>
@@ -21,6 +27,9 @@ layout: default
   </div>
 </section>
 
+<!-- Skills overview: one card per entry in the `competencies:` list in
+     index.md. Each entry picks an icon by name, which maps to a file
+     like _includes/icon-code.svg -->
 <section class="section" id="competencies">
   <div class="container">
     <h2 class="section-heading text-center reveal">Competencies</h2>
@@ -36,24 +45,21 @@ layout: default
   </div>
 </section>
 
+<!-- Project cards, sorted by the `order` value in each project's front
+     matter. The card markup lives in _includes/project-card.html -->
 <section class="section section-alt" id="portfolio">
   <div class="container">
     <h2 class="section-heading text-center reveal">Selected Projects</h2>
     <div class="project-grid">
       {% assign projects = site.projects | sort: 'order' %}
       {% for project in projects %}
-      <a href="{{ project.url | relative_url }}" class="project-card reveal">
-        <img src="{{ project.image | prepend: '/assets/images/' | relative_url }}" alt="{{ project.title }}" loading="lazy"{% if project.image_fit == 'contain' %} class="fit-contain"{% endif %}>
-        <div class="project-card-overlay">
-          <span class="project-card-type">{{ project.type }}</span>
-          <span class="project-card-title">{{ project.title }}</span>
-        </div>
-      </a>
+        {% include project-card.html project=project %}
       {% endfor %}
     </div>
   </div>
 </section>
 
+<!-- Call-to-action banner linking to the contact page -->
 <section class="section cta-band">
   <div class="container text-center">
     <h2 class="reveal">Want to talk?</h2>
