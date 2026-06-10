@@ -1,19 +1,37 @@
 ---
 layout: default
 ---
+{%- assign project_slug = page.path | split: '/' | last | split: '.' | first -%}
+{%- assign image_base = '/assets/images/projects/' | append: project_slug | append: '/' -%}
 <section class="page-hero">
   <div class="container narrow">
     <p class="page-kicker">{{ page.type }}</p>
     <h1>{{ page.title }}</h1>
-    <p class="page-subtitle">{{ page.date }}</p>
+    <p class="page-subtitle">{{ page.timeframe }}</p>
   </div>
 </section>
 <article class="section">
   <div class="container narrow">
-    <img class="project-hero-image" src="{{ page.image | prepend: '/assets/images/' | relative_url }}" alt="{{ page.title }}">
+    <img class="project-hero-image" src="{{ page.image | prepend: image_base | relative_url }}" alt="{{ page.title }}">
     <div class="prose">
       {{ content }}
     </div>
+
+    {% for video in page.videos %}
+      {% include video.html video=video %}
+    {% endfor %}
+
+    {% if page.gallery %}
+    <div class="project-gallery">
+      {% for item in page.gallery %}
+      <figure>
+        <img src="{{ item.image | prepend: image_base | relative_url }}" alt="{{ item.alt | default: page.title }}" loading="lazy">
+        {% if item.caption %}<figcaption>{{ item.caption }}</figcaption>{% endif %}
+      </figure>
+      {% endfor %}
+    </div>
+    {% endif %}
+
     <nav class="project-pagination" aria-label="Project navigation">
       <a href="{{ '/projects/' | relative_url }}" class="btn btn-ghost">&larr; All projects</a>
     </nav>

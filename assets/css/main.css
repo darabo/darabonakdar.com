@@ -505,6 +505,28 @@ img { max-width: 100%; height: auto; }
   border: 0;
 }
 
+/* Project gallery ----------------------------------------------------------------- */
+
+.project-gallery { margin-top: 1.75rem; }
+
+.project-gallery figure {
+  margin: 0 0 1.75rem;
+}
+
+.project-gallery img {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.project-gallery figcaption {
+  margin-top: 0.6rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
 /* Contact cards ------------------------------------------------------------------ */
 
 .contact-cards {

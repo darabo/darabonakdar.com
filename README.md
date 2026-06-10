@@ -28,22 +28,42 @@ bundle exec jekyll serve
 
 Then open <http://localhost:4000>.
 
-## Adding a project
+## Adding or editing a project
 
-Create `_projects/my-project.md`:
+Projects are fully data-driven — no HTML required. Each one is a Markdown
+file in `_projects/` plus a matching image folder.
+
+1. Copy `_projects/TEMPLATE.md` to `_projects/my-project-slug.md`
+   (and delete the `published: false` line). The filename becomes the URL:
+   `/projects/my-project-slug/`.
+2. Put its images in `assets/images/projects/my-project-slug/`.
+3. Fill in the front matter:
 
 ```yaml
 ---
-title: My Project
-type: Virtual Reality
-timeframe: January 2026
-image: my-thumbnail.jpg   # placed in assets/images/
-image_fit: contain        # optional, for logo-style thumbnails
-order: 4                  # position in the grid
+title: My New Project
+type: Virtual Reality            # category label shown on the card
+timeframe: January 2026          # free-form date or range
+image: thumbnail.jpg             # thumbnail + hero image
+image_fit: contain               # optional, for logos that shouldn't be cropped
+order: 4                         # position in the project grid
+videos:                          # optional, rendered after the text
+  - vimeo: 187430501
+    title: My video
+  - youtube: dQw4w9WgXcQ
+    title: Another video
+gallery:                         # optional, rendered after the videos
+  - image: photo-1.jpg
+    alt: Description of the photo
+    caption: Optional caption
 ---
 
-Markdown content here.
+Markdown body — background, description, anything.
 ```
+
+To remove a project, delete its `.md` file and image folder. Card markup is
+shared between the homepage and the projects page via
+`_includes/project-card.html`.
 
 ## Deployment
 

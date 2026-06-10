@@ -1,7 +1,7 @@
 # Site settings
 title:              Dara Bonakdar
 tagline:            VR/AR Developer, Python Engineer & Entrepreneur
-email:              hello@darabonakdar.com
+email:              dara@darabonakdar.com
 description: >-
   Dara Bonakdar — VR/AR developer, Python engineer, and entrepreneur.
   Pioneer in Virtual Reality in the San Francisco Bay Area with experience
@@ -11,7 +11,7 @@ baseurl:            ""
 
 author:
   name:             Dara Bonakdar
-  email:            hello@darabonakdar.com
+  email:            dara@darabonakdar.com
 
 # Social profiles
 github_username:    darabo

@@ -1,0 +1,10 @@
+{%- assign project = include.project -%}
+{%- assign project_slug = project.path | split: '/' | last | split: '.' | first -%}
+<a href="{{ project.url | relative_url }}" class="project-card reveal">
+  <img src="{{ '/assets/images/projects/' | append: project_slug | append: '/' | append: project.image | relative_url }}"
+       alt="{{ project.title }}" loading="lazy"{% if project.image_fit == 'contain' %} class="fit-contain"{% endif %}>
+  <div class="project-card-overlay">
+    <span class="project-card-type">{{ project.type }}</span>
+    <span class="project-card-title">{{ project.title }}</span>
+  </div>
+</a>
