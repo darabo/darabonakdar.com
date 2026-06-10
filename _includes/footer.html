@@ -1,33 +1,28 @@
-<footer class="footer-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 text-center">
-                <h4>Quick Links</h4>
-                <ul class="footer-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4 text-center">
-                <h4>Connect</h4>
-                <div class="footer-social">
-                    <a href="https://linkedin.com/in/darabonakdar" target="_blank" title="LinkedIn"><i class="fa fa-linkedin fa-2x"></i></a>
-                    <a href="https://github.com/darabo" target="_blank" title="GitHub"><i class="fa fa-github fa-2x"></i></a>
-                </div>
-            </div>
-            <div class="col-md-4 text-center">
-                <h4>Contact</h4>
-                <p><a href="mailto:hello@darabonakdar.com">hello@darabonakdar.com</a></p>
-                <p>San Francisco, CA, USA</p>
-            </div>
-        </div>
-        <hr class="footer-divider">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <p class="copyright">&copy; <script>document.write(new Date().getFullYear())</script> Dara Bonakdar. All rights reserved.</p>
-            </div>
-        </div>
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h2 class="footer-heading">Dara Bonakdar</h2>
+      <p class="footer-tagline">{{ site.tagline }}</p>
     </div>
+    <div>
+      <h2 class="footer-heading">Explore</h2>
+      <ul class="footer-links">
+        <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+        <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>
+        <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer-heading">Connect</h2>
+      <ul class="footer-links">
+        <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        <li><a href="https://linkedin.com/in/{{ site.linkedin_username }}" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+      <p class="footer-location">{{ site.location }}</p>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; <span data-year>2026</span> Dara Bonakdar. All rights reserved.</p>
+  </div>
 </footer>
