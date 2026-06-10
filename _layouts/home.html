@@ -1,0 +1,63 @@
+---
+layout: default
+---
+<section class="hero" style="--hero-image: url('{{ '/assets/images/header.jpg' | relative_url }}')">
+  <div class="hero-content container">
+    <p class="hero-kicker reveal">Hello, I'm</p>
+    <h1 class="hero-title reveal">Dara Bonakdar</h1>
+    <p class="hero-subtitle reveal">{{ page.subtitle }}</p>
+    <div class="hero-actions reveal">
+      <a href="{{ '/projects/' | relative_url }}" class="btn btn-primary">View my work</a>
+      <a href="{{ '/contact/' | relative_url }}" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section-accent" id="about">
+  <div class="container narrow text-center">
+    <h2 class="section-heading reveal">About, in brief</h2>
+    {{ content }}
+    <a href="{{ '/about/' | relative_url }}" class="btn btn-ghost reveal">More about me</a>
+  </div>
+</section>
+
+<section class="section" id="competencies">
+  <div class="container">
+    <h2 class="section-heading text-center reveal">Competencies</h2>
+    <div class="card-grid">
+      {% for item in page.competencies %}
+      <div class="card reveal">
+        <div class="card-icon">{% include icon-{{ item.icon }}.svg %}</div>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="portfolio">
+  <div class="container">
+    <h2 class="section-heading text-center reveal">Selected Projects</h2>
+    <div class="project-grid">
+      {% assign projects = site.projects | sort: 'order' %}
+      {% for project in projects %}
+      <a href="{{ project.url | relative_url }}" class="project-card reveal">
+        <img src="{{ project.image | prepend: '/assets/images/' | relative_url }}" alt="{{ project.title }}" loading="lazy"{% if project.image_fit == 'contain' %} class="fit-contain"{% endif %}>
+        <div class="project-card-overlay">
+          <span class="project-card-type">{{ project.type }}</span>
+          <span class="project-card-title">{{ project.title }}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section cta-band">
+  <div class="container text-center">
+    <h2 class="reveal">Want to talk?</h2>
+    <p class="reveal">I'm open to collaborations, projects, freelance work, research, and general inquiries.</p>
+    <a href="{{ '/contact/' | relative_url }}" class="btn btn-primary reveal">Let's get in touch</a>
+  </div>
+</section>

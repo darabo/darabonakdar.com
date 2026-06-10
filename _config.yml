@@ -1,20 +1,51 @@
 # Site settings
-title:              Dara Bonakdar's Website
+title:              Dara Bonakdar
+tagline:            VR/AR Developer, Python Engineer & Entrepreneur
 email:              hello@darabonakdar.com
-description:        "Dara Bonakdar's Website and Portfolio"
-url:                "http://localhost:4000"
-# baseurl:            /main
-baseurl:
+description: >-
+  Dara Bonakdar — VR/AR developer, Python engineer, and entrepreneur.
+  Pioneer in Virtual Reality in the San Francisco Bay Area with experience
+  across three continents.
+url:                "https://darabonakdar.com"
+baseurl:            ""
 
-# File structure settings
-image_path:         ../public/images
+author:
+  name:             Dara Bonakdar
+  email:            hello@darabonakdar.com
+
+# Social profiles
+github_username:    darabo
+linkedin_username:  darabonakdar
+location:           San Francisco, CA, USA
+
+# Default social-share image (relative to site root)
+og_image:           /assets/images/header.jpg
 
 # Build settings
 markdown:           kramdown
 permalink:          pretty
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
 
 # Collection definitions and settings
 collections:
   projects:
     output: true
     permalink: /projects/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md
+  - LICENSE

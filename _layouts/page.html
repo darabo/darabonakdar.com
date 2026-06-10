@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<section class="page-hero">
+  <div class="container narrow">
+    <h1>{{ page.title }}</h1>
+    {% if page.subtitle %}<p class="page-subtitle">{{ page.subtitle }}</p>{% endif %}
+  </div>
+</section>
+<article class="section">
+  <div class="container narrow prose">
+    {{ content }}
+  </div>
+</article>

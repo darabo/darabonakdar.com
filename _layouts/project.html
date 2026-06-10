@@ -1,14 +1,21 @@
 ---
-layout: main
+layout: default
 ---
-<main class="project">
-	<section id="contact-content">
-		<img id="project-image" src="{{ site.baseurl }}/{{ site.image_path }}/{{ page.image }}">
-		<h1 id="project-title">{{ page.title }}</h1>
-		<h2 id="project-date">{{ page.date  | date: '%B, %Y'}}</h2>
-
-		{{ content }}
-
-	</section>
-
-</main>
+<section class="page-hero">
+  <div class="container narrow">
+    <p class="page-kicker">{{ page.type }}</p>
+    <h1>{{ page.title }}</h1>
+    <p class="page-subtitle">{{ page.date }}</p>
+  </div>
+</section>
+<article class="section">
+  <div class="container narrow">
+    <img class="project-hero-image" src="{{ page.image | prepend: '/assets/images/' | relative_url }}" alt="{{ page.title }}">
+    <div class="prose">
+      {{ content }}
+    </div>
+    <nav class="project-pagination" aria-label="Project navigation">
+      <a href="{{ '/projects/' | relative_url }}" class="btn btn-ghost">&larr; All projects</a>
+    </nav>
+  </div>
+</article>

@@ -1,0 +1,20 @@
+<header class="site-header" data-header>
+  <nav class="site-nav container" aria-label="Main">
+    <a class="brand" href="{{ '/' | relative_url }}">Dara&nbsp;Bonakdar</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
+      <span class="sr-only">Toggle navigation</span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+    <ul class="nav-menu" id="site-menu" data-nav-menu>
+      <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+      <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>
+      <li><a href="{{ '/contact/' | relative_url }}">Contact</a></li>
+      <li class="nav-social">
+        <a href="https://linkedin.com/in/{{ site.linkedin_username }}" target="_blank" rel="noopener" aria-label="LinkedIn">{% include icon-linkedin.svg %}</a>
+        <a href="https://github.com/{{ site.github_username }}" target="_blank" rel="noopener" aria-label="GitHub">{% include icon-github.svg %}</a>
+      </li>
+    </ul>
+  </nav>
+</header>
