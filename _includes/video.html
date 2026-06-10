@@ -1,5 +1,12 @@
+<!--
+  Renders one responsive video embed (Vimeo or YouTube).
+  Expects a `video` parameter that is one entry from a project's `videos:`
+  front matter list, e.g. {vimeo: 187430501, title: "My video"} or
+  {youtube: "dQw4w9WgXcQ", title: "My video"}.
+  The .embed-container CSS keeps the player at a 16:9 shape on all screens.
+-->
 {%- if include.video.vimeo -%}
-<div class="embed-container"><iframe src="https://player.vimeo.com/video/{{ include.video.vimeo }}" title="{{ include.video.title | default: 'Video' }}" allowfullscreen></iframe></div>
+<div class="embed-container"><iframe src="https://player.vimeo.com/video/{{ include.video.vimeo }}" title="{{ include.video.title | default: 'Video' }}" loading="lazy" allowfullscreen></iframe></div>
 {%- elsif include.video.youtube -%}
-<div class="embed-container"><iframe src="https://www.youtube.com/embed/{{ include.video.youtube }}?color=white&rel=0" title="{{ include.video.title | default: 'Video' }}" allowfullscreen></iframe></div>
+<div class="embed-container"><iframe src="https://www.youtube.com/embed/{{ include.video.youtube }}?color=white&rel=0" title="{{ include.video.title | default: 'Video' }}" loading="lazy" allowfullscreen></iframe></div>
 {%- endif -%}

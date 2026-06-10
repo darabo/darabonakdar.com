@@ -1,28 +1,46 @@
 /* ==========================================================================
-   darabonakdar.com — custom stylesheet
-   No frameworks: modern CSS with custom properties, grid and fluid type.
+   darabonakdar.com — the single stylesheet for the whole site.
+
+   How to read this file if you're new to CSS:
+
+   - It's organised top to bottom: design tokens (colors, fonts) first,
+     then base element styles, then one section per visual component
+     (header, hero, cards, footer...), in roughly the order they appear
+     on the page.
+   - "Design tokens" are CSS custom properties (variables) defined on
+     :root. They start with -- and are read with var(--name). Changing
+     a color here changes it everywhere it's used.
+   - No frameworks (no Bootstrap etc.) — everything is hand-written, so
+     every rule you see is actually used by the site.
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   Design tokens. The site is dark by default; the @media block below
+   swaps the values when the visitor's device asks for a light theme.
+   -------------------------------------------------------------------------- */
+
 :root {
-  --color-bg: #0e131b;
-  --color-bg-alt: #131a25;
-  --color-surface: #1a2230;
-  --color-text: #e8ecf3;
-  --color-text-muted: #9aa7ba;
-  --color-accent: #f0a500;
-  --color-accent-soft: rgba(240, 165, 0, 0.12);
-  --color-border: rgba(255, 255, 255, 0.08);
+  --color-bg: #0e131b;            /* page background */
+  --color-bg-alt: #131a25;        /* slightly lighter band, for alternating sections */
+  --color-surface: #1a2230;       /* card backgrounds */
+  --color-text: #e8ecf3;          /* main text */
+  --color-text-muted: #9aa7ba;    /* secondary, less important text */
+  --color-accent: #f0a500;        /* the amber brand color */
+  --color-accent-soft: rgba(240, 165, 0, 0.12); /* faint amber, for icon circles */
+  --color-border: rgba(255, 255, 255, 0.08);    /* hairline borders */
+  --header-bg: rgba(14, 19, 27, 0.88);          /* translucent nav-bar background */
 
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Fraunces", Georgia, serif;
+  --font-display: "Fraunces", Georgia, serif;   /* used for headings */
 
-  --container: 72rem;
-  --container-narrow: 46rem;
-  --radius: 0.75rem;
+  --container: 72rem;          /* max width of normal page content */
+  --container-narrow: 46rem;   /* max width of text-heavy content (easier to read) */
+  --radius: 0.75rem;           /* rounded-corner size used on cards and images */
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  --header-height: 4.25rem;
+  --header-height: 4.25rem;    /* height of the fixed nav bar */
 }
 
+/* Light theme: applied automatically when the device prefers light mode */
 @media (prefers-color-scheme: light) {
   :root {
     --color-bg: #fcfcfa;
@@ -33,12 +51,17 @@
     --color-accent: #c77800;
     --color-accent-soft: rgba(199, 120, 0, 0.1);
     --color-border: rgba(0, 0, 0, 0.08);
+    --header-bg: rgba(252, 252, 250, 0.88);
     --shadow: 0 10px 30px rgba(20, 30, 50, 0.1);
   }
 }
 
-/* Base ------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Base styles: sensible defaults for raw HTML elements.
+   -------------------------------------------------------------------------- */
 
+/* Make width/height calculations include padding and borders — much more
+   intuitive than the browser default */
 *,
 *::before,
 *::after {
@@ -46,8 +69,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: var(--header-height);
+  scroll-behavior: smooth;                  /* animate jumps to #anchors */
+  scroll-padding-top: var(--header-height); /* stop anchors hiding under the fixed nav */
 }
 
 body {
@@ -67,6 +90,9 @@ h1, h2, h3, h4 {
   letter-spacing: -0.01em;
 }
 
+/* clamp(min, preferred, max) scales the size smoothly with the screen
+   width, so headings are big on desktop and reasonable on phones without
+   needing media queries */
 h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
 h2 { font-size: clamp(1.6rem, 3.5vw, 2.3rem); }
 h3 { font-size: 1.25rem; font-family: var(--font-sans); font-weight: 600; }
@@ -80,8 +106,11 @@ a {
 
 a:hover { text-decoration: underline; }
 
+/* Never let an image overflow its container */
 img { max-width: 100%; height: auto; }
 
+/* Centered content column. min() picks whichever is smaller: full width
+   minus a little breathing room, or the max container width */
 .container {
   width: min(100% - 2.5rem, var(--container));
   margin-inline: auto;
@@ -91,8 +120,10 @@ img { max-width: 100%; height: auto; }
 
 .text-center { text-align: center; }
 
+/* Slightly larger intro paragraph */
 .lead { font-size: 1.2rem; color: var(--color-text-muted); }
 
+/* Visually hides an element but keeps it readable by screen readers */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -105,6 +136,8 @@ img { max-width: 100%; height: auto; }
   border: 0;
 }
 
+/* "Skip to content" link for keyboard users: parked above the viewport,
+   slides into view when focused with the Tab key */
 .skip-link {
   position: absolute;
   top: -3rem;
@@ -119,25 +152,32 @@ img { max-width: 100%; height: auto; }
 
 .skip-link:focus { top: 0; }
 
-/* Header / nav ------------------------------------------------------------ */
+/* --------------------------------------------------------------------------
+   Fixed navigation bar.
+   -------------------------------------------------------------------------- */
 
 .site-header {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: 100;
-  background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+  position: fixed;        /* stays put while the page scrolls underneath */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;           /* draw on top of everything else */
+  background: var(--header-bg);
+  /* Frosted-glass blur of the content behind the bar. Purely decorative —
+     browsers that don't support it just show the translucent color above */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s ease;
 }
 
+/* JavaScript adds .is-scrolled once the page moves, fading in a divider */
 .site-header.is-scrolled { border-bottom-color: var(--color-border); }
 
 .site-nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* brand on the left, links on the right */
   min-height: var(--header-height);
   gap: 1rem;
 }
@@ -168,6 +208,7 @@ img { max-width: 100%; height: auto; }
 
 .nav-menu a:hover { color: var(--color-accent); text-decoration: none; }
 
+/* LinkedIn/GitHub icons, separated from the page links by a thin line */
 .nav-social {
   display: flex;
   gap: 0.9rem;
@@ -178,6 +219,8 @@ img { max-width: 100%; height: auto; }
 .nav-social a { display: inline-flex; color: var(--color-text-muted); }
 .nav-social a:hover { color: var(--color-accent); }
 
+/* Hamburger button: three stacked bars. Hidden on desktop (display: none),
+   shown by the media query below on small screens */
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -195,16 +238,20 @@ img { max-width: 100%; height: auto; }
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
+/* When the menu is open (aria-expanded flips to "true" in JS), morph the
+   three bars into an X: outer bars rotate, middle bar fades out.
+   nth-child counts the sr-only span too, hence 2/3/4 */
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { transform: translateY(7px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { opacity: 0; }
 .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(4) { transform: translateY(-7px) rotate(-45deg); }
 
+/* Mobile navigation: below ~767px the links become a dropdown panel */
 @media (max-width: 47.9rem) {
   .nav-toggle { display: flex; }
 
   .nav-menu {
     position: absolute;
-    top: 100%;
+    top: 100%;          /* directly under the nav bar */
     left: 0;
     right: 0;
     flex-direction: column;
@@ -212,11 +259,12 @@ img { max-width: 100%; height: auto; }
     gap: 0;
     background: var(--color-bg);
     border-bottom: 1px solid var(--color-border);
-    display: none;
+    display: none;      /* closed by default... */
   }
 
-  .nav-menu.is-open { display: flex; }
+  .nav-menu.is-open { display: flex; } /* ...opened by JS adding this class */
 
+  /* Full-width tap targets are easier to hit with a thumb */
   .nav-menu li a {
     display: block;
     padding: 0.9rem 1.25rem;
@@ -230,12 +278,14 @@ img { max-width: 100%; height: auto; }
   }
 }
 
-/* Buttons ------------------------------------------------------------------ */
+/* --------------------------------------------------------------------------
+   Buttons.
+   -------------------------------------------------------------------------- */
 
 .btn {
   display: inline-block;
   padding: 0.8rem 1.7rem;
-  border-radius: 999px;
+  border-radius: 999px; /* a huge radius makes a pill shape */
   font-weight: 600;
   font-size: 0.95rem;
   border: 2px solid transparent;
@@ -244,13 +294,15 @@ img { max-width: 100%; height: auto; }
 
 .btn:hover { text-decoration: none; transform: translateY(-2px); }
 
+/* Solid amber button for the main action on a screen */
 .btn-primary {
   background: var(--color-accent);
   color: #10151f;
 }
 
-.btn-primary:hover { background: color-mix(in srgb, var(--color-accent) 85%, white); }
+.btn-primary:hover { background: #ffba2e; }
 
+/* Outlined button for secondary actions */
 .btn-ghost {
   border-color: currentColor;
   color: var(--color-text);
@@ -258,14 +310,21 @@ img { max-width: 100%; height: auto; }
 
 .btn-ghost:hover { color: var(--color-accent); }
 
-/* Hero ---------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Homepage hero: full-screen banner with a darkened background photo.
+   The photo itself is passed in from the layout as --hero-image.
+   -------------------------------------------------------------------------- */
 
 .hero {
   display: grid;
-  place-items: center;
-  min-height: 100svh;
+  place-items: center;  /* centers the content both ways */
+  min-height: 100vh;    /* fallback for older browsers */
+  min-height: 100svh;   /* "small viewport height": avoids jumpiness from
+                           mobile browser toolbars appearing/disappearing */
   padding: calc(var(--header-height) + 2rem) 0 4rem;
   text-align: center;
+  /* Two layers: a dark tint on top (so white text stays readable),
+     the photo underneath */
   background:
     linear-gradient(rgba(10, 14, 20, 0.72), rgba(10, 14, 20, 0.82)),
     var(--hero-image) center / cover no-repeat;
@@ -291,21 +350,27 @@ img { max-width: 100%; height: auto; }
 
 .hero-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* buttons stack neatly on narrow screens */
   gap: 1rem;
   justify-content: center;
   margin-top: 2.25rem;
 }
 
+/* The hero sits on a dark photo in both themes, so force light button text */
 .hero .btn-ghost { color: #f4f6fa; }
 .hero .btn-ghost:hover { color: var(--color-accent); }
 
-/* Sections ------------------------------------------------------------------ */
+/* --------------------------------------------------------------------------
+   Generic page sections and headers.
+   -------------------------------------------------------------------------- */
 
 .section { padding: clamp(3.5rem, 8vw, 6rem) 0; }
 
+/* Alternate background tone, to visually separate neighbouring sections */
 .section-alt { background: var(--color-bg-alt); }
 
+/* Dark navy band used for the "About, in brief" section. It stays dark in
+   both themes, so its text colors are fixed rather than variables */
 .section-accent {
   background: linear-gradient(135deg, #1b2435, #10151f);
   color: #e8ecf3;
@@ -315,6 +380,7 @@ img { max-width: 100%; height: auto; }
 .section-accent .btn-ghost { color: #e8ecf3; }
 .section-accent .btn-ghost:hover { color: var(--color-accent); }
 
+/* Section title with a short amber underline */
 .section-heading { margin-bottom: 1.5rem; }
 
 .section-heading::after {
@@ -327,6 +393,7 @@ img { max-width: 100%; height: auto; }
   margin: 1rem auto 0;
 }
 
+/* Header strip at the top of inner pages (About, Projects, Contact...) */
 .page-hero {
   padding: calc(var(--header-height) + clamp(2.5rem, 7vw, 5rem)) 0 clamp(1.5rem, 4vw, 2.5rem);
   background: var(--color-bg-alt);
@@ -335,6 +402,7 @@ img { max-width: 100%; height: auto; }
 
 .page-hero h1 { margin-bottom: 0.2em; }
 
+/* Small uppercase label above a page title (e.g. a project's category) */
 .page-kicker {
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -346,8 +414,12 @@ img { max-width: 100%; height: auto; }
 
 .page-subtitle { color: var(--color-text-muted); font-size: 1.1rem; margin: 0; }
 
-/* Cards ---------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Competency cards on the homepage.
+   -------------------------------------------------------------------------- */
 
+/* auto-fit + minmax = responsive grid with no media queries: as many
+   15rem-or-wider columns as fit, so 4 across on desktop, 1 on phones */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
@@ -365,10 +437,11 @@ img { max-width: 100%; height: auto; }
 }
 
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px); /* gentle lift on hover */
   box-shadow: var(--shadow);
 }
 
+/* Circular tinted backdrop behind each card's SVG icon */
 .card-icon {
   display: inline-grid;
   place-items: center;
@@ -382,7 +455,9 @@ img { max-width: 100%; height: auto; }
 
 .card p { color: var(--color-text-muted); font-size: 0.95rem; margin: 0; }
 
-/* Project grid ----------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Project cards (homepage and /projects/ page).
+   -------------------------------------------------------------------------- */
 
 .project-grid {
   display: grid;
@@ -391,37 +466,58 @@ img { max-width: 100%; height: auto; }
   margin-top: 2.5rem;
 }
 
+/* The /projects/ page has its own header, so no extra top gap needed */
 .project-grid.standalone { margin-top: 0; }
 
 .project-card {
   position: relative;
   display: block;
-  aspect-ratio: 4 / 3;
   border-radius: var(--radius);
-  overflow: hidden;
+  overflow: hidden; /* clips the image's zoom effect to the rounded corners */
   background: var(--color-surface);
   border: 1px solid var(--color-border);
 }
 
+/* Keep every card at a 4:3 shape regardless of its image's dimensions.
+   The invisible ::before block's padding-top is calculated from the card's
+   WIDTH, so 75% padding = 4:3. This trick works in every browser, unlike
+   the newer aspect-ratio property */
+.project-card::before {
+  content: "";
+  display: block;
+  padding-top: 75%;
+}
+
+/* The image fills the card and is cropped to fit (object-fit: cover) */
 .project-card img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.35s ease;
 }
 
-.project-card:hover img { transform: scale(1.05); }
+.project-card:hover img { transform: scale(1.05); } /* slow zoom on hover */
 
-/* Logo-style artwork shouldn't be cropped */
+/* Logo-style artwork shouldn't be cropped: show the whole image instead,
+   on a white backdrop. Applied via `thumbnail_fit: contain` in a
+   project's front matter. The extra bottom padding keeps the logo clear
+   of the title overlay */
 .project-card img.fit-contain {
   object-fit: contain;
   padding: 1.5rem 1.5rem 4.5rem;
   background: #fff;
 }
 
+/* Category + title, sitting on a dark gradient at the bottom of the card
+   so the text is readable over any photo */
 .project-card-overlay {
   position: absolute;
-  inset: auto 0 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
@@ -444,6 +540,7 @@ img { max-width: 100%; height: auto; }
   color: #fff;
 }
 
+/* Large lead image at the top of a project page */
 .project-hero-image {
   width: 100%;
   border-radius: var(--radius);
@@ -453,7 +550,9 @@ img { max-width: 100%; height: auto; }
 
 .project-pagination { margin-top: 3rem; }
 
-/* CTA band ------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Amber call-to-action banner near the bottom of the homepage.
+   -------------------------------------------------------------------------- */
 
 .cta-band {
   background: linear-gradient(135deg, var(--color-accent), #d4731f);
@@ -469,7 +568,11 @@ img { max-width: 100%; height: auto; }
   margin-top: 0.75rem;
 }
 
-/* Prose (markdown content) ------------------------------------------------------ */
+/* --------------------------------------------------------------------------
+   "Prose": styling for Markdown-generated content (About page, project
+   descriptions...). These rules target plain tags (h2, img, li) because
+   Markdown output has no CSS classes.
+   -------------------------------------------------------------------------- */
 
 .prose h2 {
   font-size: 1.5rem;
@@ -488,9 +591,13 @@ img { max-width: 100%; height: auto; }
 .prose ul { padding-left: 1.3rem; }
 .prose li { margin-bottom: 0.4em; }
 
+/* Responsive video frame that always keeps a 16:9 shape: the wrapper's
+   height comes from padding-bottom (56.25% of the width = 9/16), and the
+   iframe is stretched to fill it. Works in every browser */
 .embed-container {
   position: relative;
-  aspect-ratio: 16 / 9;
+  height: 0;
+  padding-bottom: 56.25%;
   margin: 1.75rem 0;
   border-radius: var(--radius);
   overflow: hidden;
@@ -499,13 +606,16 @@ img { max-width: 100%; height: auto; }
 
 .embed-container iframe {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   border: 0;
 }
 
-/* Project gallery ----------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Project page photo gallery.
+   -------------------------------------------------------------------------- */
 
 .project-gallery { margin-top: 1.75rem; }
 
@@ -527,7 +637,9 @@ img { max-width: 100%; height: auto; }
   color: var(--color-text-muted);
 }
 
-/* Contact cards ------------------------------------------------------------------ */
+/* --------------------------------------------------------------------------
+   Contact page cards (email / LinkedIn / GitHub).
+   -------------------------------------------------------------------------- */
 
 .contact-cards {
   display: grid;
@@ -561,13 +673,17 @@ img { max-width: 100%; height: auto; }
   color: var(--color-text-muted);
 }
 
+/* overflow-wrap lets a long email address break onto a second line
+   instead of overflowing the card on small screens */
 .contact-card-value {
   font-weight: 600;
   color: var(--color-text);
   overflow-wrap: anywhere;
 }
 
-/* Footer ---------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Footer.
+   -------------------------------------------------------------------------- */
 
 .site-footer {
   background: var(--color-bg-alt);
@@ -615,7 +731,11 @@ img { max-width: 100%; height: auto; }
   font-size: 0.85rem;
 }
 
-/* Reveal animations ------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Scroll-reveal animation.
+   Elements with class "reveal" start invisible and slide up into place
+   when they scroll into view (assets/js/main.js adds .is-visible).
+   -------------------------------------------------------------------------- */
 
 .reveal {
   opacity: 0;
@@ -628,7 +748,8 @@ img { max-width: 100%; height: auto; }
   transform: none;
 }
 
-/* If JS is disabled or reduced motion requested, show everything */
+/* Respect the "reduce motion" accessibility setting: skip all the
+   animation and show content immediately */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
@@ -639,6 +760,9 @@ img { max-width: 100%; height: auto; }
   }
 }
 
+/* If JavaScript is disabled the .is-visible class would never be added,
+   so make sure content still shows. The "no-js" class is set on <html>
+   and removed by an inline script when JS is available */
 .no-js .reveal {
   opacity: 1;
   transform: none;

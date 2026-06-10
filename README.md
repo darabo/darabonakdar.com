@@ -44,8 +44,8 @@ file in `_projects/` plus a matching image folder.
 title: My New Project
 type: Virtual Reality            # category label shown on the card
 timeframe: January 2026          # free-form date or range
-image: thumbnail.jpg             # thumbnail + hero image
-image_fit: contain               # optional, for logos that shouldn't be cropped
+thumbnail: thumbnail.jpg         # card + hero image
+thumbnail_fit: contain           # optional, for logos that shouldn't be cropped
 order: 4                         # position in the project grid
 videos:                          # optional, rendered after the text
   - vimeo: 187430501
@@ -60,6 +60,9 @@ gallery:                         # optional, rendered after the videos
 
 Markdown body — background, description, anything.
 ```
+
+Keep images at most ~1600px wide and JPEG-compressed — page weight is the
+main thing that hurts mobile performance.
 
 To remove a project, delete its `.md` file and image folder. Card markup is
 shared between the homepage and the projects page via

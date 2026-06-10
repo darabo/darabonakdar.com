@@ -9,8 +9,8 @@ published: false
 title: My New Project
 type: Virtual Reality            # short category label shown on the card
 timeframe: January 2026          # free-form date or range
-image: thumbnail.jpg             # thumbnail + hero, inside the project's image folder
-# image_fit: contain             # uncomment for logo-style thumbnails that shouldn't be cropped
+thumbnail: thumbnail.jpg         # card + hero image, inside the project's image folder
+# thumbnail_fit: contain         # uncomment for logo-style thumbnails that shouldn't be cropped
 order: 4                         # position in the project grid (lower = earlier)
 
 # Optional: embedded videos, shown after the text
@@ -27,6 +27,9 @@ order: 4                         # position in the project grid (lower = earlier
 #     caption: Optional caption shown under the image
 #   - image: photo-2.jpg
 #     alt: Another photo
+
+# Tip: keep images web-friendly — max ~1600px wide, JPEG for photos.
+# Large originals slow the site down badly on phones.
 ---
 
 ## Background

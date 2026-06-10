@@ -1,7 +1,13 @@
 ---
+# The homepage. The HTML structure lives in _layouts/home.html — this file
+# only supplies the data: which subtitle to show, the competency cards, and
+# the intro paragraph (the Markdown below the --- lines).
 layout: home
 title: Home
 subtitle: VR/AR and Python developer, entrepreneur, innovator — person of many hats.
+
+# One entry per card in the "Competencies" section. `icon` picks a file
+# from _includes/ — e.g. icon: code -> _includes/icon-code.svg
 competencies:
   - title: Developer & Entrepreneur
     icon: code

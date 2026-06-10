@@ -1,4 +1,6 @@
 ---
+# The /contact/ page. The cards below pull the email address and usernames
+# from _config.yml, so contact details only ever need updating there.
 layout: page
 title: Contact
 subtitle: Let's get in touch.

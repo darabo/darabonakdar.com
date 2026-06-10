@@ -2,8 +2,8 @@
 title: Human Rights Film Focus Nepal
 type: Non-Profit
 timeframe: November 2012
-image: hrffn-logo.png
-image_fit: contain
+thumbnail: hrffn-logo.png
+thumbnail_fit: contain
 order: 3
 videos:
   - youtube: 5L-h2q4lgBw

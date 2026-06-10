@@ -1,4 +1,7 @@
 ---
+# The /projects/ overview page: a grid of every project in _projects/,
+# sorted by each project's `order` front matter value.
+# To add a project, see _projects/TEMPLATE.md — nothing here needs to change.
 layout: page
 title: Projects
 subtitle: A selection of work across virtual reality, art installations and non-profits.

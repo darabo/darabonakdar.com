@@ -2,10 +2,10 @@
 title: Metaverse Scholars Club
 type: Virtual Reality
 timeframe: November 2015
-image: metaverse.png
+thumbnail: metaverse.png
 order: 2
 gallery:
-  - image: metaverse_wallpaper.png
+  - image: metaverse_wallpaper.jpg
     alt: Metaverse Scholars Club logo
 ---
 

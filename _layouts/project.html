@@ -1,8 +1,15 @@
 ---
+# Layout for a single project page. Each Markdown file in _projects/ is
+# rendered through this template; everything on the page is driven by the
+# file's front matter (title, type, timeframe, thumbnail, videos, gallery).
 layout: default
 ---
+<!-- The slug (filename without extension) tells us which folder in
+     assets/images/projects/ holds this project's images -->
 {%- assign project_slug = page.path | split: '/' | last | split: '.' | first -%}
 {%- assign image_base = '/assets/images/projects/' | append: project_slug | append: '/' -%}
+
+<!-- Page header: category, title and time period -->
 <section class="page-hero">
   <div class="container narrow">
     <p class="page-kicker">{{ page.type }}</p>
@@ -10,17 +17,23 @@ layout: default
     <p class="page-subtitle">{{ page.timeframe }}</p>
   </div>
 </section>
+
 <article class="section">
   <div class="container narrow">
-    <img class="project-hero-image" src="{{ page.image | prepend: image_base | relative_url }}" alt="{{ page.title }}">
+    <!-- Large lead image at the top (the same image used as the card thumbnail) -->
+    <img class="project-hero-image" src="{{ page.thumbnail | prepend: image_base | relative_url }}" alt="{{ page.title }}">
+
+    <!-- The Markdown body of the project file is inserted here -->
     <div class="prose">
       {{ content }}
     </div>
 
+    <!-- Optional video embeds, declared as a `videos:` list in front matter -->
     {% for video in page.videos %}
       {% include video.html video=video %}
     {% endfor %}
 
+    <!-- Optional photo gallery, declared as a `gallery:` list in front matter -->
     {% if page.gallery %}
     <div class="project-gallery">
       {% for item in page.gallery %}

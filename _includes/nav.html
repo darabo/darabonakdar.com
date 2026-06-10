@@ -1,12 +1,22 @@
+<!--
+  The fixed navigation bar at the top of every page.
+  On small screens the links collapse behind a hamburger button; the
+  open/close behaviour lives in assets/js/main.js (look for data-nav-toggle).
+  Social usernames come from _config.yml so they're defined in one place.
+-->
 <header class="site-header" data-header>
   <nav class="site-nav container" aria-label="Main">
     <a class="brand" href="{{ '/' | relative_url }}">Dara&nbsp;Bonakdar</a>
+
+    <!-- Hamburger button, only visible on small screens.
+         aria-expanded tells screen readers whether the menu is open -->
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" data-nav-toggle>
       <span class="sr-only">Toggle navigation</span>
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
     </button>
+
     <ul class="nav-menu" id="site-menu" data-nav-menu>
       <li><a href="{{ '/about/' | relative_url }}">About</a></li>
       <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li>

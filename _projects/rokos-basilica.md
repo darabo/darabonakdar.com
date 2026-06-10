@@ -2,7 +2,7 @@
 title: Roko's Basilica
 type: Virtual Reality
 timeframe: December 2015 – September 2016
-image: roko_concept.jpg
+thumbnail: roko_concept.jpg
 order: 1
 videos:
   - vimeo: 187430501
